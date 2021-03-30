@@ -1,0 +1,19 @@
+import seaborn as sns
+import numpy as np
+from collections import Counter
+df=sns.load_dataset("iris")
+df.head()
+def distance_formula(x,y,q):
+ distance=np.sum(abs(x-y)**q)**(1/q)
+ return distance
+X=df.iloc[:,0:4]Y=df["species"]
+test_data=[4.8,2.7,2.5,0.7]
+distance_list=[]
+for i in X.index:
+d=distance_formula(test_data,X.iloc[i],2)
+distance_list.append(d)
+df["distance"]=distance_list
+df.sort_values(by=["distance"],inplace=True)
+counter=Counter(df.species[:5])
+species_testdata=counter.most_common()[0][0]
+print("The species of test data is" ,species_testdata)
